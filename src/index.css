@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    /* Global Color System explicitly requested */
+    --background: 222 47% 11%; /* #0f172a */
+    --foreground: 210 20% 98%; /* #f9fafb Primary Text */
+
+    --card: 221 39% 11%; /* #111827 Cards / Panels */
+    --card-foreground: 210 20% 98%;
+
+    --popover: 221 39% 11%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 142 71% 45%;    /* #22c55e Accent Green */
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 215 28% 17%;  
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 28% 17%;
+    --muted-foreground: 218 11% 65%; /* #9ca3af Secondary text */
+
+    --accent: 142 71% 45%; /* #22c55e */
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 222 47% 11%;
+
+    --warning: 38 85% 50%;
+    --warning-foreground: 222 47% 11%;
+
+    --info: 210 75% 52%;
+    --info-foreground: 222 47% 11%;
+
+    --border: 215 28% 17%; /* #1f2937 Borders */
+    --input: 215 28% 17%;
+    --ring: 142 71% 45%;
+
+    --radius: 0.625rem;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 142 71% 45%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 215 28% 17%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 215 28% 17%;
+    --sidebar-ring: 142 71% 45%;
+
+    /* Algorithm tokens */
+    --algo-compare: 38 92% 50%; /* yellow */
+    --algo-swap: 0 72% 50%; /* red */
+    --algo-sorted: 142 71% 45%; /* green */
+    --algo-active: 142 71% 45%;
+    --algo-default: 210 80% 55%; /* blue */
+    --algo-visited: 210 75% 52%;
+    --algo-path: 142 71% 45%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(168 72% 44%), hsl(210 75% 52%));
+    --gradient-accent: linear-gradient(135deg, hsl(252 60% 56%), hsl(300 55% 50%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/15 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/25;
+  }
+
+  ::selection {
+    background: hsl(168 72% 44% / 0.2);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-card/60 backdrop-blur-xl border border-border/60 rounded-xl;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-lg border border-border/50 rounded-xl;
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    @apply bg-card/60 border-border/80;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
+  }
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+@layer components {
+  .algo-bar {
+    @apply rounded-t-sm;
+    transition: all 0.3s ease;
+    background: hsl(var(--algo-default));
+  }
+  .algo-bar-comparing {
+    background: hsl(var(--algo-compare));
+    box-shadow: 0 0 12px -2px hsl(38 85% 50% / 0.3);
+    transform: scaleX(1.06);
+    z-index: 10;
+  }
+  .algo-bar-swapped {
+    background: hsl(var(--algo-swap));
+    box-shadow: 0 0 12px -2px hsl(0 65% 50% / 0.3);
+    transform: scaleX(1.06);
+    z-index: 10;
+  }
+  .algo-bar-sorted {
+    background: hsl(var(--algo-sorted));
+  }
+  .algo-bar-active {
+    background: hsl(var(--algo-active));
+    transform: scaleX(1.03);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

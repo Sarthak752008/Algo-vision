@@ -1,0 +1,52 @@
+﻿PAGE EXCEPTION STACK:
+TypeError: Cannot read properties of undefined (reading 'S')
+    at Tt.exports (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:8094:528)
+    at createReconciler (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9278:23)
+    at <anonymous> (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9490:18)
+PAGE EXCEPTION STACK:
+TypeError: Cannot read properties of undefined (reading 'S')
+    at Tt.exports (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:8094:528)
+    at createReconciler (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9278:23)
+    at <anonymous> (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9490:18)
+PAGE ERROR STR: The above error occurred in one of your React components:
+
+    at Lazy
+    at Suspense
+    at div
+    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8882:40)
+    at PopChildMeasure (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8021:23)
+    at PopChild (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8048:21)
+    at PresenceChild (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8098:24)
+    at AnimatePresence (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8175:26)
+    at div
+    at div
+    at div
+    at VisualizePage (http://localhost:8080/src/pages/VisualizePage.tsx?t=1775680581378:92:24)
+    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:4088:5)
+    at Outlet (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:4494:26)
+    at div
+    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8882:40)
+    at PopChildMeasure (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8021:23)
+    at PopChild (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8048:21)
+    at PresenceChild (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8098:24)
+    at AnimatePresence (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=ce1653ae:8175:26)
+    at main
+    at div
+    at div
+    at AppLayout (http://localhost:8080/src/components/layout/AppLayout.tsx?t=1775680166106:28:43)
+    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:4088:5)
+    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:4558:5)
+    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:4501:15)
+    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=ce1653ae:5247:5)
+    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-STMHAAQ4.js?v=ce1653ae:38:15)
+    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=ce1653ae:2234:5)
+    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=ce1653ae:2934:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+PAGE EXCEPTION STACK:
+TypeError: Cannot read properties of undefined (reading 'S')
+    at Tt.exports (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:8094:528)
+    at createReconciler (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9278:23)
+    at <anonymous> (http://localhost:8080/node_modules/.vite/deps/chunk-4KFQPJ5R.js?v=ce1653ae:9490:18)
