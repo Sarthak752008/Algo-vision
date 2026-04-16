@@ -23,8 +23,13 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
     return m || 1;
   }, [table]);
 
-  const getCellDisplay = (val: number) => {
+  const getCellDisplay = (val: any) => {
+    if (val === undefined || val === null) return "0";
+    if (algoId === "n-queens") return val === 1 ? "♕" : "";
     if (val === Infinity || val > 1e8) return "∞";
+    if (algoId === "subset-sum" || algoId === "word-break" || algoId.includes("warshall")) {
+       return val === 1 ? "T" : val === 0 ? "F" : val;
+    }
     return val;
   };
 
@@ -83,10 +88,10 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
     }
 
     if (cell > 0 && cell !== Infinity) {
-      const intensity = 0.05 + (Math.min(cell / maxVal, 1) * 0.25);
+      const intensity = 0.1 + (Math.min(cell / maxVal, 1) * 0.35); // Increased intensity
       return {
-        bg: "bg-white/[0.02] border-white/[0.05]",
-        text: "text-foreground font-medium",
+        bg: "bg-white/[0.04] border-white/[0.1]", // Brighter threshold
+        text: "text-foreground font-bold", // Added font-bold
         glow: false,
         customBg: `rgba(45, 212, 191, ${intensity})`,
       };
@@ -94,7 +99,7 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
 
     return {
       bg: "bg-transparent border-white/[0.05]",
-      text: "text-muted-foreground/40",
+      text: "text-muted-foreground/80", // Increased from /40
       glow: false,
     };
   };
@@ -116,6 +121,33 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
       rows = ["Amount"];
       cols = Array.from({ length: table[0]?.length || 0 }, (_, i) => `${i}`);
       title = "Amt";
+    } else if (algoId === "word-break") {
+      rows = ["DP"];
+      cols = ["∅", ...algoInput.s.split("")];
+      title = "i";
+    } else if (algoId === "mcm") {
+      rows = Array.from({ length: table.length }, (_, i) => i === 0 ? "" : `A${i}`);
+      cols = Array.from({ length: table[0]?.length || 0 }, (_, i) => i === 0 ? "" : `A${i}`);
+      title = "i \\ j";
+    } else if (algoId === "rod-cutting") {
+      rows = ["Profit"];
+      cols = Array.from({ length: table[0]?.length || 0 }, (_, i) => `${i}`);
+      title = "Len";
+    } else if (algoId === "floyd-warshall" || algoId === "warshall") {
+      rows = Array.from({ length: table.length }, (_, i) => `${i}`);
+      cols = Array.from({ length: table.length }, (_, i) => `${i}`);
+      title = "Src\\Dst";
+    } else if (algoId === "resource-allocation") {
+      cols = Array.from({ length: algoInput.m + 1 }, (_, i) => `${i}`);
+      title = "Stg\\Unt";
+    } else if (algoId === "n-queens") {
+      rows = Array.from({ length: algoInput.n }, (_, i) => `R${i + 1}`);
+      cols = Array.from({ length: algoInput.n }, (_, i) => `C${i + 1}`);
+      title = "R \\ C";
+    } else if (algoId === "subset-sum") {
+      rows = ["∅", ...algoInput.set.map((v: number) => `${v}`)];
+      cols = Array.from({ length: table[0]?.length || 0 }, (_, i) => `${i}`);
+      title = "Set \\ Sum";
     }
 
     return { rows, cols, title };
@@ -123,51 +155,126 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
 
   return (
     <div className="flex flex-col h-full gap-6 p-6">
-      {/* Legend / Inputs */}
+      {/* Default Input Display */}
       <div className="flex flex-wrap gap-3">
-        {algoId === "knapsack" && algoInput.weights.map((wt: number, idx: number) => (
-          <div key={idx} className={`px-3 py-1.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider transition-all ${
-            activeI === idx + 1 ? "bg-accent/20 border-accent text-accent" : "bg-white/[0.02] border-white/[0.05] text-muted-foreground/60"
-          }`}>
-            Item {idx+1}: W:{wt} V:{algoInput.values[idx]}
-          </div>
-        ))}
+        {algoId === "knapsack" && (
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Capacity</span>
+              <span className="text-sm font-mono font-bold text-primary">{algoInput.capacity}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Weights</span>
+              <span className="text-sm font-mono font-bold text-accent">{algoInput.weights.join(", ")}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Values</span>
+              <span className="text-sm font-mono font-bold text-warning">{algoInput.values.join(", ")}</span>
+            </div>
+          </>
+        )}
         {algoId === "lcs" && (
           <>
-            <div className="px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] flex flex-col gap-1">
-              <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest">String 1</span>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">String 1</span>
               <span className="text-sm font-mono font-bold text-primary">{algoInput.s1}</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] flex flex-col gap-1">
-              <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest">String 2</span>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">String 2</span>
               <span className="text-sm font-mono font-bold text-accent">{algoInput.s2}</span>
             </div>
           </>
         )}
         {algoId === "coin-change" && (
-          <div className="flex items-center gap-3">
-            <div className="px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] flex flex-col gap-1">
-              <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest">Coins</span>
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Coins</span>
               <span className="text-sm font-mono font-bold text-primary">{algoInput.coins.join(", ")}</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] flex flex-col gap-1">
-              <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest">Target</span>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Target Amount</span>
               <span className="text-sm font-mono font-bold text-accent">{algoInput.amount}</span>
             </div>
+          </>
+        )}
+        {algoId === "word-break" && (
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">String</span>
+              <span className="text-sm font-mono font-bold text-primary">{algoInput.s}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Dictionary</span>
+              <span className="text-sm font-mono font-bold text-accent">{algoInput.wordDict.join(", ")}</span>
+            </div>
+          </>
+        )}
+        {(algoId === "floyd-warshall" || algoId === "warshall") && (
+          <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+            <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Vertices</span>
+            <span className="text-sm font-mono font-bold text-primary">{algoInput.V}</span>
           </div>
+        )}
+        {algoId === "mcm" && (
+          <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+            <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Dimensions</span>
+            <span className="text-sm font-mono font-bold text-primary">{algoInput.p.join(" × ")}</span>
+          </div>
+        )}
+        {algoId === "rod-cutting" && (
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Rod Length</span>
+              <span className="text-sm font-mono font-bold text-primary">{algoInput.n}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Prices</span>
+              <span className="text-sm font-mono font-bold text-accent">{algoInput.prices.join(", ")}</span>
+            </div>
+          </>
+        )}
+        {algoId === "n-queens" && (
+          <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+            <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Board Size (N)</span>
+            <span className="text-sm font-mono font-bold text-primary">{algoInput.n} × {algoInput.n}</span>
+          </div>
+        )}
+        {algoId === "subset-sum" && (
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Set</span>
+              <span className="text-sm font-mono font-bold text-primary">{"{" + algoInput.set.join(", ") + "}"}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Target Sum</span>
+              <span className="text-sm font-mono font-bold text-accent">{algoInput.sum}</span>
+            </div>
+          </>
+        )}
+        {algoId === "resource-allocation" && (
+          <>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Stages</span>
+              <span className="text-sm font-mono font-bold text-primary">{algoInput.n}</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Units</span>
+              <span className="text-sm font-mono font-bold text-accent">{algoInput.m}</span>
+            </div>
+          </>
         )}
       </div>
 
       {/* Table Visualizer */}
-      <div className="flex-1 overflow-auto rounded-2xl border border-white/[0.05] bg-black/20 shadow-2xl relative">
-        <table className="w-full border-collapse font-mono text-[11px]">
+      <div className="flex-1 overflow-auto rounded-2xl border border-white/[0.1] bg-black/40 shadow-2xl relative">
+        <table className="w-full border-collapse font-mono text-[14px]">
           <thead className="sticky top-0 z-20">
             <tr>
-              <th className="p-3 bg-secondary/80 backdrop-blur-md border-b border-r border-white/10 text-muted-foreground font-black uppercase tracking-tighter sticky left-0 z-30">
+              <th className="p-4 bg-secondary/95 backdrop-blur-md border-b border-r border-white/20 text-muted-foreground font-black uppercase tracking-tighter sticky left-0 z-30">
                 {labels.title}
               </th>
               {labels.cols.map((col, ci) => (
-                <th key={ci} className={`p-3 bg-secondary/80 backdrop-blur-md border-b border-white/10 transition-colors ${ci === activeW ? "text-primary" : "text-muted-foreground/40"}`}>
+                <th key={ci} className={`p-4 bg-secondary/95 backdrop-blur-md border-b border-white/20 transition-colors ${ci === activeW ? "text-primary scale-110" : "text-muted-foreground/60"}`}>
                   {col}
                 </th>
               ))}
@@ -176,7 +283,7 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
           <tbody>
             {table.map((row, ri) => (
               <tr key={ri} className="group">
-                <td className={`p-3 border-r border-white/5 font-black text-center sticky left-0 z-10 transition-colors ${ri === activeI ? "bg-accent/20 text-accent" : "bg-secondary/40 text-muted-foreground/30"}`}>
+                <td className={`p-4 border-r border-white/10 font-black text-center sticky left-0 z-10 transition-colors ${ri === activeI ? "bg-accent/40 text-accent scale-110" : "bg-secondary/60 text-muted-foreground/80"}`}>
                   {labels.rows[ri] || ri}
                 </td>
                 {row.map((cell, ci) => {
@@ -184,7 +291,7 @@ export const DPVisualizer = memo(function DPVisualizer({ snapshot, algoId, algoI
                   return (
                     <td 
                       key={ci} 
-                      className={`p-3 text-center border-b border-white/5 relative min-w-[3rem] transition-all duration-300 ${style.bg}`}
+                      className={`p-4 text-center border-b border-white/10 relative min-w-[3.5rem] transition-all duration-300 ${style.bg}`}
                       style={style.customBg ? { backgroundColor: style.customBg } : undefined}
                     >
                       <AnimatePresence mode="popLayout">

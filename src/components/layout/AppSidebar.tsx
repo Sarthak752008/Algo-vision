@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BarChart3, GitBranch, Grid3X3, Home, Gamepad2, Trophy, X, Menu, ChevronRight } from "lucide-react";
+import { BarChart3, GitBranch, Grid3X3, Home, Gamepad2, Trophy, X, Menu, ChevronRight, RotateCcw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ALGORITHM_LIST } from "@/algorithms";
 import { useGameState } from "@/hooks/useGameState";
@@ -10,12 +10,14 @@ const categoryIcons: Record<string, React.ReactNode> = {
   sorting: <BarChart3 className="h-3.5 w-3.5" />,
   greedy: <GitBranch className="h-3.5 w-3.5" />,
   dp: <Grid3X3 className="h-3.5 w-3.5" />,
+  backtracking: <RotateCcw className="h-3.5 w-3.5" />,
 };
 
 const categoryLabels: Record<string, string> = {
   sorting: "Sorting",
   greedy: "Greedy",
   dp: "Dynamic Programming",
+  backtracking: "Backtracking",
 };
 
 interface AppSidebarProps {
@@ -26,7 +28,7 @@ interface AppSidebarProps {
 export function AppSidebar({ open, onClose }: AppSidebarProps) {
   const location = useLocation();
   const { state: gameState } = useGameState();
-  const categories = ["sorting", "greedy", "dp"];
+  const categories = ["sorting", "greedy", "dp", "backtracking"];
 
   const totalAlgos = ALGORITHM_LIST.length;
   const completed = gameState.completedAlgorithms.length;

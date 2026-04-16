@@ -59,10 +59,10 @@ export const SortingVisualizer = memo(function SortingVisualizer({ snapshot }: S
     <div className="flex flex-col gap-5 p-2 w-full">
       {/* Legend */}
       <div className="flex flex-wrap items-center justify-center gap-4 px-2 pt-2 shrink-0">
-        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-default))]" /><span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Default</span></div>
-        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-compare))]" /><span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Comparing</span></div>
-        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-swap))]" /><span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Swapping</span></div>
-        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-sorted))]" /><span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Sorted</span></div>
+        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-default))]" /><span className="text-[12px] text-muted-foreground uppercase font-bold tracking-wider">Default</span></div>
+        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-compare))]" /><span className="text-[12px] text-muted-foreground uppercase font-bold tracking-wider">Comparing</span></div>
+        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-swap))]" /><span className="text-[12px] text-muted-foreground uppercase font-bold tracking-wider">Swapping</span></div>
+        <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-sm bg-[hsl(var(--algo-sorted))]" /><span className="text-[12px] text-muted-foreground uppercase font-bold tracking-wider">Sorted</span></div>
       </div>
 
       {/* Main array blocks visualization */}
@@ -103,7 +103,7 @@ export const SortingVisualizer = memo(function SortingVisualizer({ snapshot }: S
                 </motion.div>
                 
                 {/* Index label underneath */}
-                <div className="absolute -bottom-5 left-0 right-0 text-center text-[10px] font-mono text-muted-foreground/40 font-bold">
+                <div className="absolute -bottom-6 left-0 right-0 text-center text-[12px] font-mono text-muted-foreground/80 font-bold">
                   {index}
                 </div>
               </motion.div>
@@ -139,16 +139,16 @@ export const SortingVisualizer = memo(function SortingVisualizer({ snapshot }: S
                   <div className="p-2 min-h-[60px] flex flex-wrap gap-1.5 items-start justify-start content-start">
                     <AnimatePresence>
                       {bucket.map((val, j) => (
-                        <motion.div
-                          key={`${i}-${j}-${val}`}
-                          initial={{ opacity: 0, scale: 0.5, y: -8 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.5 }}
-                          transition={{ delay: j * 0.02, duration: 0.2 }}
-                          className="bg-accent/20 border border-accent/30 text-accent font-mono font-bold text-[10px] rounded px-1.5 py-1 min-w-[28px] text-center"
-                        >
-                          {val}
-                        </motion.div>
+                          <motion.div
+                            key={`${i}-${j}-${val}`}
+                            initial={{ opacity: 0, scale: 0.5, y: -8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ delay: j * 0.02, duration: 0.2 }}
+                            className="bg-accent/30 border border-accent/50 text-foreground font-mono font-bold text-[12px] rounded px-2 py-1 min-w-[32px] text-center"
+                          >
+                            {val}
+                          </motion.div>
                       ))}
                     </AnimatePresence>
                   </div>

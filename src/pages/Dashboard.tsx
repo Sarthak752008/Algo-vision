@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { BarChart3, GitBranch, Grid3X3, ArrowRight, Trophy, Gamepad2, BookOpen, Search, Zap, Target } from "lucide-react";
+import { BarChart3, GitBranch, Grid3X3, ArrowRight, Trophy, Gamepad2, BookOpen, Search, Zap, Target, RotateCcw } from "lucide-react";
 import { ALGORITHM_LIST, CATEGORIES } from "@/algorithms";
 import { useGameState } from "@/hooks/useGameState";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ const catIcons: Record<string, React.ReactNode> = {
   sorting: <BarChart3 className="h-4 w-4" />,
   greedy: <GitBranch className="h-4 w-4" />,
   dp: <Grid3X3 className="h-4 w-4" />,
+  backtracking: <RotateCcw className="h-4 w-4" />,
 };
 
 const container = {

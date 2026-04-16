@@ -33,21 +33,21 @@ export function CodePanel({
           <TabsList className="bg-transparent h-8 p-0 gap-1">
             <TabsTrigger 
               value="code" 
-              className="px-3 h-7 text-[10px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/10 data-[state=active]:text-primary rounded-md transition-all"
+              className="px-4 h-9 text-[12px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
             >
-              <FileCode className="h-3 w-3 mr-1.5" /> Implementation
+              <FileCode className="h-4 w-4 mr-2" /> Implementation
             </TabsTrigger>
             <TabsTrigger 
               value="explain" 
-              className="px-3 h-7 text-[10px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/10 data-[state=active]:text-primary rounded-md transition-all"
+              className="px-4 h-9 text-[12px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
             >
-              <BookOpen className="h-3 w-3 mr-1.5" /> Learning
+              <BookOpen className="h-4 w-4 mr-2" /> Learning
             </TabsTrigger>
           </TabsList>
           
-          <div className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tighter ${
-            difficulty === "Easy" ? "bg-success/10 text-success" : 
-            difficulty === "Medium" ? "bg-warning/10 text-warning" : "bg-destructive/10 text-destructive"
+          <div className={`px-2.5 py-1 rounded-md text-[11px] font-black uppercase tracking-widest ${
+            difficulty === "Easy" ? "bg-success/20 text-success" : 
+            difficulty === "Medium" ? "bg-warning/20 text-warning" : "bg-destructive/20 text-destructive"
           }`}>
             {difficulty}
           </div>
@@ -55,8 +55,8 @@ export function CodePanel({
 
         {/* Message Banner (Always visible or contextual?) */}
         <div className="px-4 py-2.5 bg-primary/5 border-b border-white/5 flex items-start gap-2 shrink-0">
-          <Info className="h-3 w-3 text-primary mt-0.5 shrink-0" />
-          <p className="text-[11px] text-primary/90 font-medium leading-relaxed italic">
+          <Info className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+          <p className="text-[13px] text-primary/100 font-bold leading-relaxed italic">
             {message || "System standby. Waiting for execution..."}
           </p>
         </div>
@@ -67,9 +67,9 @@ export function CodePanel({
             <div className="flex-1 overflow-auto bg-black/10 p-4 space-y-5">
               
               <div className="bg-black/40 rounded-lg border border-white/5 overflow-hidden shadow-sm">
-                <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/5">
-                  <div className="h-2 w-2 rounded-full bg-yellow-400/80" />
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">JavaScript (Live Execution)</span>
+                <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/10">
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+                  <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">JavaScript (Live Execution)</span>
                 </div>
                 <SyntaxHighlighter
                   language="javascript"
@@ -88,7 +88,7 @@ export function CodePanel({
                     background: "transparent",
                     padding: "1rem 0",
                     margin: 0,
-                    fontSize: "0.75rem",
+                    fontSize: "0.9rem", // Increased from 0.75rem
                     lineHeight: "1.6",
                   }}
                 >
@@ -98,11 +98,11 @@ export function CodePanel({
 
               {cppCode && (
                 <div className="bg-black/40 rounded-lg border border-white/5 overflow-hidden shadow-sm">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/5">
-                    <div className="h-2 w-2 rounded-full bg-blue-500/80" />
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">C++ Implementation</span>
+                  <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/10">
+                    <div className="h-2.5 w-2.5 rounded-full bg-blue-500" />
+                    <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">C++ Implementation</span>
                   </div>
-                  <SyntaxHighlighter language="cpp" style={atomOneDark} customStyle={{ margin: 0, padding: '1rem', fontSize: '0.75rem', background: 'transparent' }}>
+                  <SyntaxHighlighter language="cpp" style={atomOneDark} customStyle={{ margin: 0, padding: '1rem', fontSize: '0.85rem', background: 'transparent' }}>
                     {cppCode}
                   </SyntaxHighlighter>
                 </div>
@@ -110,11 +110,11 @@ export function CodePanel({
 
               {javaCode && (
                 <div className="bg-black/40 rounded-lg border border-white/5 overflow-hidden shadow-sm">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/5">
-                    <div className="h-2 w-2 rounded-full bg-red-500/80" />
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Java Implementation</span>
+                  <div className="flex items-center gap-2 px-3 py-2 bg-black/60 border-b border-white/10">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
+                    <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">Java Implementation</span>
                   </div>
-                  <SyntaxHighlighter language="java" style={atomOneDark} customStyle={{ margin: 0, padding: '1rem', fontSize: '0.75rem', background: 'transparent' }}>
+                  <SyntaxHighlighter language="java" style={atomOneDark} customStyle={{ margin: 0, padding: '1rem', fontSize: '0.85rem', background: 'transparent' }}>
                     {javaCode}
                   </SyntaxHighlighter>
                 </div>
@@ -127,7 +127,7 @@ export function CodePanel({
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <div className="h-6 w-1 bg-primary rounded-full" />
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">1. Problem Overview</h4>
+                <h4 className="text-[12px] font-black uppercase tracking-widest text-muted-foreground">1. Problem Overview</h4>
               </div>
               <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                 {description}
@@ -138,7 +138,7 @@ export function CodePanel({
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <div className="h-6 w-1 bg-warning rounded-full" />
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">2. Solution Approach</h4>
+                <h4 className="text-[12px] font-black uppercase tracking-widest text-muted-foreground">2. Solution Approach</h4>
               </div>
               <div className="space-y-2">
                 {approach && approach.length > 0 ? (
@@ -174,17 +174,17 @@ export function CodePanel({
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white/5 rounded-lg p-3 border border-white/5 group hover:border-primary/30 transition-colors">
               <div className="flex items-center gap-2 mb-1.5">
-                <Clock className="h-3 w-3 text-warning group-hover:animate-pulse" />
-                <span className="text-[9px] font-black uppercase tracking-tighter text-muted-foreground">Time Complexity</span>
+                <Clock className="h-4 w-4 text-warning group-hover:animate-pulse" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Time Complexity</span>
               </div>
-              <div className="text-xs font-black font-mono text-primary">{timeComplexity}</div>
+              <div className="text-sm font-black font-mono text-primary">{timeComplexity}</div>
             </div>
             <div className="bg-white/5 rounded-lg p-3 border border-white/5 group hover:border-accent/30 transition-colors">
               <div className="flex items-center gap-2 mb-1.5">
-                <HardDrive className="h-3 w-3 text-info" />
-                <span className="text-[9px] font-black uppercase tracking-tighter text-muted-foreground">Space complexity</span>
+                <HardDrive className="h-4 w-4 text-info" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Space complexity</span>
               </div>
-              <div className="text-xs font-black font-mono text-accent">{spaceComplexity}</div>
+              <div className="text-sm font-black font-mono text-accent">{spaceComplexity}</div>
             </div>
           </div>
         </div>

@@ -140,42 +140,44 @@ export const GraphVisualizer = memo(function GraphVisualizer({ snapshot, graphIn
                 transition={{ duration: 0.35 }}
               />
 
-              {/* Weight label */}
-              <motion.g
-                animate={{
-                  scale: relaxing ? 1.15 : 1,
-                  opacity: relaxing || isHoveredEdge ? 1 : 0.5,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <rect
-                  x={midX - 10}
-                  y={midY - 18}
-                  width={20}
-                  height={16}
-                  rx={4}
-                  fill={
-                    relaxing
-                      ? "hsl(38 92% 50% / 0.15)"
-                      : "hsl(228 24% 8% / 0.8)"
-                  }
-                  stroke={relaxing ? "hsl(38 92% 50% / 0.3)" : "transparent"}
-                  strokeWidth={1}
-                />
-                <text
-                  x={midX}
-                  y={midY - 8}
-                  textAnchor="middle"
-                  className="text-[9px] font-mono font-bold"
-                  fill={
-                    relaxing
-                      ? "hsl(38 92% 60%)"
-                      : "hsl(215 14% 48%)"
-                  }
+              {/* Weight label — only show if edge has a weight */}
+              {edge.weight != null && (
+                <motion.g
+                  animate={{
+                    scale: relaxing ? 1.15 : 1,
+                    opacity: relaxing || isHoveredEdge ? 1 : 0.5,
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
-                  {edge.weight}
-                </text>
-              </motion.g>
+                  <rect
+                    x={midX - 10}
+                    y={midY - 18}
+                    width={20}
+                    height={16}
+                    rx={4}
+                    fill={
+                      relaxing
+                        ? "hsl(38 92% 50% / 0.15)"
+                        : "hsl(228 24% 8% / 0.8)"
+                    }
+                    stroke={relaxing ? "hsl(38 92% 50% / 0.3)" : "transparent"}
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={midX}
+                    y={midY - 8}
+                    textAnchor="middle"
+                    className="text-[11px] font-mono font-bold"
+                    fill={
+                      relaxing
+                        ? "hsl(38 92% 70%)"
+                        : "hsl(215 14% 75%)"
+                    }
+                  >
+                    {edge.weight}
+                  </text>
+                </motion.g>
+              )}
             </g>
           );
         })}
@@ -188,10 +190,21 @@ export const GraphVisualizer = memo(function GraphVisualizer({ snapshot, graphIn
           const isCurrent = currentNode === node;
           const dist = distances[node];
           const isHovered = hoveredNode === node;
+          const colorIdx = snapshot.nodeColors?.[node] ?? 0;
 
-          let fillColor = "hsl(228 16% 14%)";
-          let strokeColor = "hsl(228 16% 22%)";
-          let textColor = "hsl(215 14% 48%)";
+          // Color palette for graph coloring
+          const colors = [
+            "hsl(228 16% 14%)", // Default
+            "hsl(0 72% 51%)",   // Red
+            "hsl(142 71% 45%)", // Green
+            "hsl(217 91% 60%)", // Blue
+            "hsl(38 92% 50%)",  // Yellow
+            "hsl(280 67% 60%)", // Purple
+          ];
+
+          let fillColor = colorIdx > 0 ? colors[colorIdx] : "hsl(228 16% 14%)";
+          let strokeColor = colorIdx > 0 ? colors[colorIdx] : "hsl(228 16% 22%)";
+          let textColor = (isCurrent || colorIdx > 0 || isVisited) ? "hsl(210 20% 96%)" : "hsl(215 14% 48%)";
 
           if (isCurrent) {
             fillColor = "hsl(264 72% 52%)";
@@ -256,50 +269,52 @@ export const GraphVisualizer = memo(function GraphVisualizer({ snapshot, graphIn
                 {node}
               </text>
 
-              {/* Distance badge */}
-              <motion.g
-                animate={{ y: 0, opacity: 1 }}
-                initial={{ y: 4, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <rect
-                  x={p.x - 14}
-                  y={p.y + 30}
-                  width={28}
-                  height={18}
-                  rx={6}
-                  fill={
-                    isCurrent
-                      ? "hsl(264 72% 58% / 0.2)"
-                      : isVisited
-                        ? "hsl(168 76% 46% / 0.15)"
-                        : "hsl(228 24% 8% / 0.6)"
-                  }
-                  stroke={
-                    isCurrent
-                      ? "hsl(264 72% 58% / 0.3)"
-                      : isVisited
-                        ? "hsl(168 76% 46% / 0.2)"
-                        : "hsl(228 16% 18%)"
-                  }
-                  strokeWidth={1}
-                />
-                <text
-                  x={p.x}
-                  y={p.y + 41}
-                  textAnchor="middle"
-                  className="text-[9px] font-mono font-bold pointer-events-none"
-                  fill={
-                    isCurrent
-                      ? "hsl(264 72% 70%)"
-                      : isVisited
-                        ? "hsl(168 76% 60%)"
-                        : "hsl(215 14% 48%)"
-                  }
+              {/* Distance / Color badge — only show if there is data */}
+              {(dist !== undefined || colorIdx > 0) && (
+                <motion.g
+                  animate={{ y: 0, opacity: 1 }}
+                  initial={{ y: 4, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  {dist === Infinity ? "∞" : dist}
-                </text>
-              </motion.g>
+                  <rect
+                    x={p.x - 14}
+                    y={p.y + 30}
+                    width={28}
+                    height={18}
+                    rx={6}
+                    fill={
+                      isCurrent
+                        ? "hsl(264 72% 58% / 0.2)"
+                        : isVisited
+                          ? "hsl(168 76% 46% / 0.15)"
+                          : "hsl(228 24% 8% / 0.6)"
+                    }
+                    stroke={
+                      isCurrent
+                        ? "hsl(264 72% 58% / 0.3)"
+                        : isVisited
+                          ? "hsl(168 76% 46% / 0.2)"
+                          : "hsl(228 16% 18%)"
+                    }
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={p.x}
+                    y={p.y + 41}
+                    textAnchor="middle"
+                    className="text-[11px] font-mono font-bold pointer-events-none"
+                    fill={
+                      isCurrent
+                        ? "hsl(264 72% 85%)"
+                        : isVisited
+                          ? "hsl(168 76% 80%)"
+                          : "hsl(215 14% 75%)"
+                    }
+                  >
+                    {colorIdx > 0 ? `C${colorIdx}` : dist === Infinity ? "∞" : dist}
+                  </text>
+                </motion.g>
+              )}
             </g>
           );
         })}

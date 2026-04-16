@@ -21,6 +21,7 @@ export interface GraphSnapshot extends BaseSnapshot {
   visited: string[];
   relaxingEdge: [string, string] | null;
   previous: Record<string, string | null>;
+  nodeColors?: Record<string, number>; // Mapping from nodeId to colorIndex
 }
 
 /** Dynamic programming snapshot */
@@ -36,7 +37,7 @@ export interface DPSnapshot extends BaseSnapshot {
 
 export type AlgorithmSnapshot = SortingSnapshot | GraphSnapshot | DPSnapshot;
 
-export type AlgorithmCategory = "sorting" | "greedy" | "dp";
+export type AlgorithmCategory = "sorting" | "greedy" | "dp" | "backtracking";
 
 export interface AlgorithmMeta {
   id: string;

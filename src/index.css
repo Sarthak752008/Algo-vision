@@ -22,7 +22,7 @@
     --secondary-foreground: 210 20% 98%;
 
     --muted: 215 28% 17%;
-    --muted-foreground: 218 11% 65%; /* #9ca3af Secondary text */
+    --muted-foreground: 218 11% 85%; /* Brighter for better accessibility */
 
     --accent: 142 71% 45%; /* #22c55e */
     --accent-foreground: 222 47% 11%;
