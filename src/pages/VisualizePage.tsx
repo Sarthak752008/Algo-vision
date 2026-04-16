@@ -349,7 +349,7 @@ export default function VisualizePage() {
   const has3D = meta.category === "sorting" || meta.category === "greedy";
 
   return (
-    <div className="flex flex-col lg:flex-row h-full gap-5 p-5 max-w-7xl mx-auto">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full gap-5 p-4 lg:p-6 max-w-[1600px] mx-auto overflow-x-hidden">
       <div className="flex-1 flex flex-col gap-4 min-w-0">
         <div className="glass-panel px-5 py-4 flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -505,7 +505,7 @@ export default function VisualizePage() {
         />
       </div>
 
-      <div className="w-full lg:w-[360px] flex flex-col gap-4 shrink-0">
+      <div className="w-full lg:w-[380px] xl:w-[420px] flex flex-col gap-4 shrink-0 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
         <AnimatePresence>
           {gameMode && gameQuestion && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
@@ -524,7 +524,7 @@ export default function VisualizePage() {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="flex-1 min-h-[400px]">
+        <div className="flex-1 overflow-hidden min-h-[450px]">
           <CodePanel meta={meta} currentLine={currentLine} message={message} />
         </div>
       </div>

@@ -33,15 +33,15 @@ export function CodePanel({
           <TabsList className="bg-transparent h-8 p-0 gap-1">
             <TabsTrigger 
               value="code" 
-              className="px-4 h-9 text-[12px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
+              className="px-3 h-8 text-[11px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
             >
-              <FileCode className="h-4 w-4 mr-2" /> Implementation
+              <FileCode className="h-3.5 w-3.5 mr-1.5" /> Implementation
             </TabsTrigger>
             <TabsTrigger 
               value="explain" 
-              className="px-4 h-9 text-[12px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
+              className="px-3 h-8 text-[11px] font-bold uppercase tracking-wider data-[state=active]:bg-primary/20 data-[state=active]:text-primary rounded-md transition-all"
             >
-              <BookOpen className="h-4 w-4 mr-2" /> Learning
+              <BookOpen className="h-3.5 w-3.5 mr-1.5" /> Learning
             </TabsTrigger>
           </TabsList>
           
@@ -86,10 +86,10 @@ export function CodePanel({
                   })}
                   customStyle={{
                     background: "transparent",
-                    padding: "1rem 0",
+                    padding: "0.75rem 0",
                     margin: 0,
-                    fontSize: "0.9rem", // Increased from 0.75rem
-                    lineHeight: "1.6",
+                    fontSize: "0.8rem",
+                    lineHeight: "1.5",
                   }}
                 >
                   {code}
@@ -122,50 +122,50 @@ export function CodePanel({
             </div>
           </TabsContent>
 
-          <TabsContent value="explain" className="h-full m-0 overflow-y-auto bg-black/10 p-5 space-y-6">
+          <TabsContent value="explain" className="flex-1 min-h-0 overflow-y-auto bg-black/10 p-4 space-y-6 scrollbar-thin">
             {/* 1. Problem Overview */}
-            <section>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="h-6 w-1 bg-primary rounded-full" />
-                <h4 className="text-[12px] font-black uppercase tracking-widest text-muted-foreground">1. Problem Overview</h4>
+            <section className="animate-fade-in">
+              <div className="flex items-center gap-2 mb-2.5">
+                <div className="h-5 w-1 bg-primary rounded-full shadow-[0_0_8px_hsl(var(--primary))]" />
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/70">1. Problem Overview</h4>
               </div>
-              <p className="text-sm text-foreground/80 leading-relaxed font-medium">
+              <p className="text-[13px] text-foreground/80 leading-relaxed font-medium bg-white/[0.02] p-3 rounded-xl border border-white/5">
                 {description}
               </p>
             </section>
 
             {/* 2. Solution Approach */}
-            <section>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="h-6 w-1 bg-warning rounded-full" />
-                <h4 className="text-[12px] font-black uppercase tracking-widest text-muted-foreground">2. Solution Approach</h4>
+            <section className="animate-fade-in [animation-delay:100ms]">
+              <div className="flex items-center gap-2 mb-2.5">
+                <div className="h-5 w-1 bg-warning rounded-full shadow-[0_0_8px_hsl(var(--warning))]" />
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/70">2. Solution Approach</h4>
               </div>
               <div className="space-y-2">
                 {approach && approach.length > 0 ? (
                   approach.map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-2 bg-white/5 rounded-lg p-3 border border-white/5">
-                      <div className="h-4 w-4 mt-0.5 rounded-full bg-warning/20 flex items-center justify-center shrink-0">
-                        <div className="h-1.5 w-1.5 rounded-full bg-warning" />
+                    <div key={idx} className="flex items-start gap-2.5 bg-white/[0.03] rounded-xl p-3 border border-white/5 hover:border-warning/30 transition-colors">
+                      <div className="h-5 w-5 mt-0.5 rounded-full bg-warning/10 flex items-center justify-center shrink-0 border border-warning/20">
+                        <span className="text-[10px] font-bold text-warning">{idx + 1}</span>
                       </div>
-                      <span className="text-xs text-foreground/80 font-medium leading-relaxed">{step}</span>
+                      <span className="text-[12px] text-foreground/70 font-medium leading-relaxed">{step}</span>
                     </div>
                   ))
                 ) : (
-                  <div className="bg-black/30 rounded-lg p-3 font-mono text-[11px] text-warning/90 border border-white/5 leading-relaxed whitespace-pre-wrap">
+                  <div className="bg-black/30 rounded-xl p-3 font-mono text-[10px] text-warning/90 border border-white/5 leading-relaxed whitespace-pre-wrap">
                     {pseudocode}
                   </div>
                 )}
               </div>
               {analogy && (
-                <div className="mt-3 flex items-start gap-2 bg-orange-500/10 rounded-lg p-3 border border-orange-500/20">
-                    <span className="text-orange-500 text-xs mt-0.5">💡</span>
-                    <p className="text-xs text-orange-500/90 italic leading-relaxed">
+                <div className="mt-4 flex items-start gap-3 bg-secondary/40 rounded-xl p-3.5 border border-white/5 relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary/40" />
+                    <Lightbulb className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-[12px] text-muted-foreground leading-relaxed italic">
                       "{analogy}"
                     </p>
                 </div>
               )}
             </section>
-
           </TabsContent>
         </div>
 

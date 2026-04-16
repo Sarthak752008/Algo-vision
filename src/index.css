@@ -69,13 +69,27 @@
 }
 
 @layer base {
+  html {
+    font-size: 14px; /* Default base size decreased from 16px */
+  }
+  @media (min-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
+  }
+  @media (min-width: 1440px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
+    line-height: 1.5; /* Reduced from 1.6 for more compact layout */
   }
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;

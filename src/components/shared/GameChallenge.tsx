@@ -39,12 +39,12 @@ export function GameChallenge({ question, score, streak, onAnswer }: GameChallen
       {/* Header Stats */}
       <div className="px-5 py-4 flex items-center justify-between border-b border-white/5 bg-black/20">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl bg-warning/10 border border-warning/20 flex items-center justify-center">
-            <Trophy className="h-5 w-5 text-warning shadow-warning/50" />
+          <div className="h-8 w-8 rounded-lg bg-warning/10 border border-warning/20 flex items-center justify-center">
+            <Trophy className="h-4 w-4 text-warning shadow-warning/50" />
           </div>
           <div>
-            <div className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground leading-none mb-1">Total Score</div>
-            <div className="text-sm font-black font-mono">{score.toLocaleString()}</div>
+            <div className="text-[9px] font-black uppercase tracking-tighter text-muted-foreground leading-none mb-1">Total Score</div>
+            <div className="text-[13px] font-black font-mono">{score.toLocaleString()}</div>
           </div>
         </div>
 
@@ -61,23 +61,23 @@ export function GameChallenge({ question, score, streak, onAnswer }: GameChallen
            )}
           <div className="text-right">
             <div className="flex items-center gap-1.5 justify-end">
-              <span className="text-sm font-black font-mono">
+              <span className="text-[13px] font-black font-mono">
                 {streak}
               </span>
-              <Flame className={`h-4 w-4 ${streak > 0 ? "text-orange-500 animate-pulse fill-orange-500/20" : "text-muted-foreground/30"}`} />
+              <Flame className={`h-3.5 w-3.5 ${streak > 0 ? "text-orange-500 animate-pulse fill-orange-500/20" : "text-muted-foreground/30"}`} />
             </div>
-            <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground leading-none mt-1">Current Streak</div>
+            <div className="text-[8px] font-black uppercase tracking-widest text-muted-foreground leading-none mt-1">Current Streak</div>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="p-5 space-y-4">
-        <div className="flex items-start gap-3">
-          <div className="h-6 w-6 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
-            <Target className="h-3.5 w-3.5 text-accent" />
+        <div className="flex items-start gap-2.5">
+          <div className="h-5 w-5 rounded bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
+            <Target className="h-3 w-3 text-accent" />
           </div>
-          <p className="text-sm font-bold leading-relaxed text-foreground/90">
+          <p className="text-[13px] font-bold leading-relaxed text-foreground/90">
             {question.question}
           </p>
         </div>
@@ -98,13 +98,13 @@ export function GameChallenge({ question, score, streak, onAnswer }: GameChallen
               <Button
                 key={idx}
                 variant="ghost"
-                size="lg"
-                className={`w-full justify-start h-auto py-3.5 px-4 text-xs font-semibold rounded-xl border transition-all duration-300 relative overflow-hidden group/opt ${statusStyles}`}
+                size="sm"
+                className={`w-full justify-start h-auto py-2.5 px-3.5 text-[11px] font-semibold rounded-xl border transition-all duration-300 relative overflow-hidden group/opt ${statusStyles}`}
                 onClick={() => handleSelect(idx)}
                 disabled={showResult}
               >
-                <div className="flex items-center gap-3 w-full">
-                  <div className={`h-6 w-6 rounded-md flex items-center justify-center text-[10px] font-black transition-colors ${
+                <div className="flex items-center gap-2.5 w-full">
+                  <div className={`h-5 w-5 rounded flex items-center justify-center text-[9px] font-black transition-colors ${
                       showResult && isCorrect ? "bg-success text-success-foreground" : 
                       showResult && isSelected ? "bg-destructive text-destructive-foreground" : 
                       "bg-white/10 text-muted-foreground group-hover/opt:bg-primary/20 group-hover/opt:text-primary"
@@ -112,8 +112,8 @@ export function GameChallenge({ question, score, streak, onAnswer }: GameChallen
                     {String.fromCharCode(65 + idx)}
                   </div>
                   <span className="flex-1 text-left">{opt}</span>
-                  {showResult && isCorrect && <CheckCircle2 className="h-4 w-4 animate-in zoom-in-50" />}
-                  {showResult && isSelected && !isCorrect && <XCircle className="h-4 w-4 animate-in zoom-in-50" />}
+                  {showResult && isCorrect && <CheckCircle2 className="h-3.5 w-3.5 animate-in zoom-in-50" />}
+                  {showResult && isSelected && !isCorrect && <XCircle className="h-3.5 w-3.5 animate-in zoom-in-50" />}
                 </div>
               </Button>
             );
